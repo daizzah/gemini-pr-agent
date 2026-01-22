@@ -52,7 +52,10 @@ if __name__ == "__main__":
     if diff:
         print("--- Sending Diff to Gemini ---")
         description = generate_pr_description(diff)
-        print("\n--- Generated Description ---")
-        print(description)
+        
+        with open("pr_description.md", "w") as f:
+            f.write(description)
+            
+        print("Description saved to pr_description.md")
     else:
         print("No diff found or error occurred.")
