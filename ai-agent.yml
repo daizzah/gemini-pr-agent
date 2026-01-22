@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0
 
       - name: Run Gemini Agent
-        uses: daizzah/gemini-pr-agent@main
+        uses: daizzah/gemini-pr-agent@v1.0.0
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
 
