@@ -2,7 +2,8 @@ name: AI PR Writer
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    # Trigger when opened, when code changes (synchronize), OR when you edit the text!
+    types: [opened, synchronize, edited]
 
 permissions:
   contents: read
@@ -18,10 +19,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run Gemini PR Writer
+      - name: Run Gemini Action
         uses: ./
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+
+          action_type: >-
+            ${{ 
+              (contains(github.event.pull_request.body, '!review') || 
+               contains(github.event.pull_request.title, '!review')) 
+              && 'review' || 'description' 
+            }}
 
       - name: Post Comment to PR
         env:
